@@ -154,9 +154,9 @@ function processMessage($message) {
           'resize_keyboard' => true)));
     } else if (strpos($text, "/help") === 0) {
       $answ = "Перечень доступных команд:";
-      $answ .= "\n   \\help - эта справка";
-      $answ .= "\n   \\temp - вывод метеосводки";
-      $answ .= "\n   \\mekod - kod chata & polzovatel'a";
+      $answ .= "\n   /help - эта справка";
+      $answ .= "\n   /temp - вывод метеосводки";
+      $answ .= "\n   /mekod - kod chata & polzovatel'a";
       $answ .= "\n    ";
       sendMessage($chat_id, $answ);
     } else if (strpos($text, "/mekod") === 0) {
@@ -175,7 +175,7 @@ function processMessage($message) {
       }
       sendMessage($chat_id, $answ);
     } else if (strpos($text, "/temp") === 0) {
-      sendMessage($chat_id, "У природы нет плохой погоды (с) ".$emoji['snow']);
+      sendMessage($chat_id, 'У природы нет плохой погоды (с) '.$emoji['weather']['snow'].' ');
     } else if (strpos($text, "/stop") === 0) {
       // stop now
     } else {
