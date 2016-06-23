@@ -112,28 +112,107 @@ function apiRequestJson($method, $parameters) {
   return exec_curl_request($handle);
 }
 
+
+function sendMessage($chat_id, $message, $quot = NULL) {
+  // отправка сообщения с цитатой иль без
+  if(is_null($quot)){
+    apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => $message));
+  }else{
+    apiRequestWebhook("sendMessage", array('chat_id' => $chat_id, "reply_to_message_id" => $quot, "text" => $message));
+  }
+
+}
+
+// смайлики
+$emoji = array(
+  'preload' => json_decode('"\uD83D\uDE03"'), // Улыбочка.
+  'weather' => array(
+    'clear' => json_decode('"\u2600"'), // Солнце.
+    'clouds' => json_decode('"\u2601"'), // Облака.
+    'rain' => json_decode('"\u2614"'), // Дождь.
+    'snow' => json_decode('"\u2744"'), // Снег.
+  ),
+);
+
 function processMessage($message) {
   // process incoming message
   $message_id = $message['message_id'];
   $chat_id = $message['chat']['id'];
+  $first_name = $message['chat']['first_name'];
   if (isset($message['text'])) {
     // incoming text message
     $text = $message['text'];
-
+    $answ = "";
     if (strpos($text, "/start") === 0) {
-      apiRequestJson("sendMessage", array('chat_id' => $chat_id, "text" => 'Hello', 'reply_markup' => array(
-        'keyboard' => array(array('Hello', 'Hi')),
-        'one_time_keyboard' => true,
-        'resize_keyboard' => true)));
-    } else if ($text === "Hello" || $text === "Hi") {
-      apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => 'Nice to meet you here'));
+      $answ = 'Приятно познакомиться, '.$first_name;
+      sendMessage($chat_id, $answ);
+      // TODO move to funk
+      apiRequestJson("sendMessage", array('chat_id' => $chat_id,
+        "text" => 'Показать что умею?', 'reply_markup' => array(
+          'keyboard' => array(array('Здорова, Бот! Ща разберусь', '\help')),
+          'one_time_keyboard' => true,
+          'resize_keyboard' => true)));
+    } else if (strpos($text, "/help") === 0) {
+      $answ = "Перечень доступных команд:";
+      $answ .= "\n   \\help - эта справка";
+      $answ .= "\n   \\temp - вывод метеосводки";
+      $answ .= "\n   \\mekod - kod chata & polzovatel'a";
+      $answ .= "\n    ";
+      sendMessage($chat_id, $answ);
+    } else if (strpos($text, "/mekod") === 0) {
+      $answ = "chat_id = ";
+      $answ .= strval($chat_id);
+      $answ .= "\n";
+      if (isset($message['from'])){
+        $answ .= "from_id = ";
+        $answ .= strval($message['from']['id']);
+        $answ .= "\n";
+      }
+      if(isset($message['chat']['username'])){
+        $answ .= "username = ";
+        $answ .= strval($message['chat']['username']);
+        $answ .= "";
+      }
+      sendMessage($chat_id, $answ);
+    } else if (strpos($text, "/temp") === 0) {
+      sendMessage($chat_id, "У природы нет плохой погоды (с) ".$emoji['snow']);
     } else if (strpos($text, "/stop") === 0) {
       // stop now
     } else {
-      apiRequestWebhook("sendMessage", array('chat_id' => $chat_id, "reply_to_message_id" => $message_id, "text" => 'Cool'));
+      // обробока джанка
+      $branch = mt_rand(0,3);
+      switch ($branch) {
+        case 0:
+          $answ = "???";
+          break;
+        case 1:
+          $answ = "выражайся яснее, или скажи /help";
+          break;
+        case 2:
+          $answ = "Похоже на бред. ";
+        default:
+          $answ .= "Ничего не понял";
+          break;
+      }
+      sendMessage($chat_id, $answ, $message_id);
     }
+  // Обработка не текстовых сообщений  
   } else {
-    apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => 'I understand only text messages'));
+    $branch = mt_rand(0,3);
+    switch ($branch) {
+      case 0:
+        $answ = "Это ты мне?";
+        break;
+      case 1:
+        $answ = "А теперь тоже самое, только словами";
+        break;
+      case 2:
+        $answ = "Не-ее, я чат-бот. ";
+      default:
+        $answ .= "Эти штуки я не понимаю";
+        break;
+    }
+    sendMessage($chat_id,$answ);
   }
 }
 
