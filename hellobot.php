@@ -1,7 +1,6 @@
 <?php
 
-define('BOT_TOKEN', '238737578:AAEXmM6gfeCsxTzttargwhYNe-UbAvDFcJE');
-define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
+define('API_URL', 'https://api.telegram.org/bot238737578:AAEXmM6gfeCsxTzttargwhYNe-UbAvDFcJE/');
 
 function apiRequestWebhook($method, $parameters) {
   if (!is_string($method)) {
@@ -136,4 +135,17 @@ function processMessage($message) {
   } else {
     apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => 'I understand only text messages'));
   }
+}
+
+
+$content = file_get_contents("php://input");
+$update = json_decode($content, true);
+
+if (!$update) {
+  // receive wrong update, must not happen
+  exit;
+}
+
+if (isset($update["message"])) {
+  processMessage($update["message"]);
 }
