@@ -175,7 +175,7 @@ function processMessage($message) {
       }
       sendMessage($chat_id, $answ);
     } else if (strpos($text, "/temp") === 0) {
-      $answ = 'У природы нет плохой погоды (с) '.$emoji['weather']['snow'].' '.$emoji['weather']['rain'].' XX';
+      $answ = "У природы нет плохой погоды (с) \xF0\x9F\x98\x81";
       sendMessage($chat_id, $answ);
     } else if (strpos($text, "/stop") === 0) {
       // stop now
