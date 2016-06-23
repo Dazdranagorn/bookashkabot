@@ -10,8 +10,8 @@ $emoji = array(
   'weather' => array(
     'clear' => json_decode('"\u2600"'), // Солнце.
     'clouds' => json_decode('"\u2601"'), // Облака.
-    'rain' => json_decode('"\u2614"'), // Дождь.
-    'snow' => json_decode('"\u2744"'), // Снег.
+    'rain' => json_decode('\xF0\x9F\x98\x81'), // Дождь.
+    'snow' => json_decode("u'\U000026C4'"), // Снег.
   ),
 );
 
@@ -175,7 +175,7 @@ function processMessage($message) {
       }
       sendMessage($chat_id, $answ);
     } else if (strpos($text, "/temp") === 0) {
-      $answ = 'У природы нет плохой погоды (с) '.$emoji['weather']['clear'];
+      $answ = 'У природы нет плохой погоды (с) '.$emoji['weather']['snow'].' '.$emoji['weather']['rain'].' XX';
       sendMessage($chat_id, $answ);
     } else if (strpos($text, "/stop") === 0) {
       // stop now
