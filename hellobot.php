@@ -1,6 +1,19 @@
 <?php
+$content = file_get_contents("php://input");
+$update = json_decode($content, true);
 
 define('API_URL', 'https://api.telegram.org/bot238737578:AAEXmM6gfeCsxTzttargwhYNe-UbAvDFcJE/');
+
+// смайлики
+$emoji = array(
+  'preload' => json_decode('"\uD83D\uDE03"'), // Улыбочка.
+  'weather' => array(
+    'clear' => json_decode('"\u2600"'), // Солнце.
+    'clouds' => json_decode('"\u2601"'), // Облака.
+    'rain' => json_decode('"\u2614"'), // Дождь.
+    'snow' => json_decode('"\u2744"'), // Снег.
+  ),
+);
 
 function apiRequestWebhook($method, $parameters) {
   if (!is_string($method)) {
@@ -112,7 +125,6 @@ function apiRequestJson($method, $parameters) {
   return exec_curl_request($handle);
 }
 
-
 function sendMessage($chat_id, $message, $quot = NULL) {
   // отправка сообщения с цитатой иль без
   if(is_null($quot)){
@@ -120,19 +132,7 @@ function sendMessage($chat_id, $message, $quot = NULL) {
   }else{
     apiRequestWebhook("sendMessage", array('chat_id' => $chat_id, "reply_to_message_id" => $quot, "text" => $message));
   }
-
 }
-
-// смайлики
-$emoji = array(
-  'preload' => json_decode('"\uD83D\uDE03"'), // Улыбочка.
-  'weather' => array(
-    'clear' => json_decode('"\u2600"'), // Солнце.
-    'clouds' => json_decode('"\u2601"'), // Облака.
-    'rain' => json_decode('"\u2614"'), // Дождь.
-    'snow' => json_decode('"\u2744"'), // Снег.
-  ),
-);
 
 function processMessage($message) {
   // process incoming message
@@ -217,10 +217,6 @@ function processMessage($message) {
   }
 }
 
-
-$content = file_get_contents("php://input");
-$update = json_decode($content, true);
-
 if (!$update) {
   // receive wrong update, must not happen
   exit;
@@ -229,3 +225,5 @@ if (!$update) {
 if (isset($update["message"])) {
   processMessage($update["message"]);
 }
+
+?> 
