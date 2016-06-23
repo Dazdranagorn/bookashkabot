@@ -39,6 +39,7 @@ function exec_curl_request($handle) {
 
   if ($http_code >= 500) {
     // do not wat to DDOS server if something goes wrong
+    echo "http:500 - это не конец<br>"
     sleep(10);
     return false;
   } else if ($http_code != 200) {
