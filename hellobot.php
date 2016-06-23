@@ -136,3 +136,4 @@ function processMessage($message) {
   } else {
     apiRequest("sendMessage", array('chat_id' => $chat_id, "text" => 'I understand only text messages'));
   }
+}
