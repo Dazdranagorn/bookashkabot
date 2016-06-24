@@ -46,10 +46,10 @@ $getAddr = cGet('http://dataservice.accuweather.com/locations/v1/cities/geoposit
 
 $answer = cGet('http://dataservice.accuweather.com/currentconditions/v1/'.$locationKey['tomchak'].'?apikey='.$accukey.
   '&language=ru-ru&details=true');
-
+/*
 $answer = 'Сейчас '.$answer['Temperature']['Metric']['Value'].' '
           $answer['Temperature']['Metric']['Unit'].', ветер ';
-/*          json_decode($answer['Wind']['Direction']['Localized']).' '.
+          json_decode($answer['Wind']['Direction']['Localized']).' '.
           $answer['Wind']['Speed']['Metric']['Value'].''.
           $answer['Wind']['Speed']['Metric']['Unit'].', облачность '
           $answer['CloudCover'].'%';
