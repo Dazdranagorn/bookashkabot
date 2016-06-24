@@ -1,6 +1,10 @@
 # bookashkabot
+=======================
  Telegram bot for home use 
 
-TODO:
+**all staff is under construction now**
+
+TODO
+-------
 240616 weather API
 		
