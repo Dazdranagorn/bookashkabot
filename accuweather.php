@@ -2,8 +2,8 @@
 $answer = '';
 
 $accukey = 'GJkfyAOsEvEM9BrJLJejV0XZJZitcAXw';
-$location = array(
-  'tomchak' => '59.890234%2C30.324573', //томчак key 580864
+$locationKey = array(
+  'tomchak' => '580864', //томчак 
 
 );
 
@@ -37,17 +37,24 @@ function cGet($message) {
   return $out;
 }
 
+/*
+// поиск 
 $getAddr = cGet('http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey='.$accukey.
-	'&q='.$location['tomchak'].'&language=ru-ru&details=true&toplevel=false');
+	'&q=59.890234%2C30.324573&language=ru-ru&details=true&toplevel=false');
+  $getAddr['Key'];
+*/
 
-//$answer = $getAddr['Key'];
+$answer = cGet('http://dataservice.accuweather.com/currentconditions/v1/'.$locationKey['tomchak'].'?apikey='.$accukey.
+  '&language=ru-ru&details=true');
 
-
-$answer = cGet('http://dataservice.accuweather.com/currentconditions/v1/'.$getAddr['Key'].'?apikey='.$accukey.
-  '&language=ru-ru&details=false');
-
-
-
+$answer = 'Сейчас '.json_decode($answer['WeatherText']).' '.
+          $answer['Temperature']['Metric']['Value'].''.
+          $answer['Temperature']['Metric']['Unit'].', ветер '.
+          json_decode($answer['Wind']['Direction']['Localized']).' '.
+          $answer['Wind']['Speed']['Metric']['Value'].''.
+          $answer['Wind']['Speed']['Metric']['Unit'].', облачность '
+          $answer['CloudCover'].'%';
+//..
 /*
   if( $curl = curl_init() ) {
     curl_setopt($curl, CURLOPT_URL, 'http://mysite.ru/receiver.php');
