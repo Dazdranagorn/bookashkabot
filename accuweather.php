@@ -20,8 +20,10 @@ function cGet($message) {
 
 $getAddr = cGet('http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey='.$accukey.
 	'&q='.$location['tomchak'].'&language=ru-ru&details=true&toplevel=false');
-$answer = cGet('http://dataservice.accuweather.com/currentconditions/v1/'.getAddr['Key'].'?apikey='.$accukey.
+$answer = cGet('http://dataservice.accuweather.com/currentconditions/v1/'.$getAddr['Key'].'?apikey='.$accukey.
   '&language=ru-ru&details=false');
+
+
 
 /*
   if( $curl = curl_init() ) {
