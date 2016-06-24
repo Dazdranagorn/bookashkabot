@@ -39,22 +39,24 @@ function cGet($message) {
 
 
 // поиск 
-/*
+
 $getAddr = cGet('http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey='.$accukey.
 	'&q=59.890234%2C30.324573&language=ru-ru&details=true&toplevel=false');
 $answer = $getAddr;
-$answer .= "\n";
-$answer .= $getAddr['Key'];
+/*$answer .= $getAddr['Key'];
 $answer .= "\n";
 $answer .= "\n";
 */
-
+/*
 $out = cGet('http://dataservice.accuweather.com/currentconditions/v1/'.$locationKey['tomchak'].'?apikey='.$accukey.
   '&language=ru-ru&details=true');
 $answer = $out['LocalObservationDateTime'];
 $answer .= "\n";
 $answer .= 'Сейчас '.$out['Temperature']['Metric']['Value'].' '.
           $out['Temperature']['Metric']['Unit'].', ветер ';
+*/
+
+
 /*          json_decode($answer['Wind']['Direction']['Localized']).' '.
           $answer['Wind']['Speed']['Metric']['Value'].' '.
           $answer['Wind']['Speed']['Metric']['Unit'].', облачность '.
