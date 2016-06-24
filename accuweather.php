@@ -3,7 +3,7 @@ $answer = '';
 
 $accukey = 'GJkfyAOsEvEM9BrJLJejV0XZJZitcAXw';
 $location = array(
-  'tomchak' => '59.890234%2C30.324573', //томчак
+  'tomchak' => '59.890234%2C30.324573', //томчак key 580864
 
 );
 
@@ -18,9 +18,10 @@ function cGet($message) {
   return $out;
 }
 
-$answer = cGet('http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey='.$accukey.
+$getAddr = cGet('http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey='.$accukey.
 	'&q='.$location['tomchak'].'&language=ru-ru&details=true&toplevel=false');
-
+$answer = cGet('http://dataservice.accuweather.com/currentconditions/v1/'.getAddr['Key'].'?apikey='.$accukey.
+  '&language=ru-ru&details=false');
 
 /*
   if( $curl = curl_init() ) {

@@ -149,7 +149,7 @@ function processMessage($message) {
       // TODO move to funk
       apiRequestJson("sendMessage", array('chat_id' => $chat_id,
         "text" => 'Показать что умею?', 'reply_markup' => array(
-          'keyboard' => array(array('Здорова, Бот! Ща разберусь', '\help')),
+          'keyboard' => array(array('Здорова, Бот! Ща разберусь', '/help')),
           'one_time_keyboard' => true,
           'resize_keyboard' => true)));
     } else if (strpos($text, "/help") === 0) {
