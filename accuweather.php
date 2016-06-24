@@ -25,7 +25,8 @@ function cGet($message) {
       $response = json_decode($response, true);
       if ($http_code != 200) {
         error_log("Request has failed with error {$response['Code']}: {$response['Message']}\n");
-      //}else{
+        $out = $response;
+      }else{
         if (isset($response['Message'])) {
           error_log("Request was successfull: {$response['Message']}\n");
         }
