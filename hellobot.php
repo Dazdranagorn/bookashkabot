@@ -176,13 +176,13 @@ function processMessage($message) {
         $answ .= strval($message['chat']['username']);
         $answ .= "";
       }*/
-      $answ = ;
+      $answ = getLocation();
       sendMessage($chat_id, $answ);
     } else if (strpos($text, "/temp") === 0) {
       $answ = "У природы нет плохой погоды (с) \xF0\x9F\x98\x81"."\nЩа посмотрим что там в небе...";
       sendMessage($chat_id, $answ);
 
-      $answ = include 'accuweather.php';
+      $answ = getWeather();
       sendMessage($chat_id, $answ);
     } else if (strpos($text, "/stop") === 0) {
       // stop now
