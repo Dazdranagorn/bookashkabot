@@ -1,10 +1,7 @@
 <?php
-$answer = '';
-
 $accukey = 'GJkfyAOsEvEM9BrJLJejV0XZJZitcAXw';
 $locationKey = array(
   'tomchak' => '580864', //томчак 
-
 );
 
 function cGet($message) {
@@ -25,7 +22,8 @@ function cGet($message) {
       $response = json_decode($response, true);
       if ($http_code != 200) {
         error_log("Request has failed with error {$response['Code']}: {$response['Message']}\n");
-        $out = $response;
+        $out = 'error:';
+        $out .= strval($http_code);
       }else{
         if (isset($response['Message'])) {
           error_log("Request was successfull: {$response['Message']}\n");
@@ -37,13 +35,37 @@ function cGet($message) {
   return $out;
 }
 
+function getLocation() {
+  $answer = '';
+  $out = cGet('http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey='.$accukey.
+  '&q=59.890234%2C30.324573&language=ru-ru&details=true&toplevel=false');
+  if (strpos($out, "error:") === 0){
+    $answer = $out;
+  }else{
+    $answer = $out['Key'];
+  }
+ 
+  return $answer;
+}
 
+function getWeather() {
+  $answer = '';
+  $out = cGet('http://dataservice.accuweather.com/currentconditions/v1/'.$locationKey['tomchak'].'?apikey='.$accukey.
+  '&language=ru-ru&details=true');
+    if (strpos($out, "error:") === 0){
+    $answer = $out;
+  }else{
+    
+    $answer = $getAddr['Key'];
+
+
+  }          
+  return $answer;
+}
 // поиск 
 
-$getAddr = cGet('http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey='.$accukey.
-	'&q=59.890234%2C30.324573&language=ru-ru&details=true&toplevel=false');
-$answer = $getAddr;
-/*$answer .= $getAddr['Key'];
+
+/*
 $answer .= "\n";
 $answer .= "\n";
 */
@@ -54,9 +76,12 @@ $answer = $out['LocalObservationDateTime'];
 $answer .= "\n";
 $answer .= 'Сейчас '.$out['Temperature']['Metric']['Value'].' '.
           $out['Temperature']['Metric']['Unit'].', ветер ';
+*//*
+    $answer = $out['LocalObservationDateTime'];
+    $answer .= "\n";
+    $answer .= 'Сейчас '.$out['Temperature']['Metric']['Value'].' '.
+              $out['Temperature']['Metric']['Unit'].', ветер ';
 */
-
-
 /*          json_decode($answer['Wind']['Direction']['Localized']).' '.
           $answer['Wind']['Speed']['Metric']['Value'].' '.
           $answer['Wind']['Speed']['Metric']['Unit'].', облачность '.
@@ -80,5 +105,5 @@ $answer .= 'Сейчас '.$out['Temperature']['Metric']['Value'].' '.
     curl_close($curl);
   }
 */
-return $answer;
+
 ?>

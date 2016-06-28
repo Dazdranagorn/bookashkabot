@@ -4,6 +4,8 @@ $update = json_decode($content, true);
 
 define('API_URL', 'https://api.telegram.org/bot238737578:AAEXmM6gfeCsxTzttargwhYNe-UbAvDFcJE/');
 
+include 'accuweather.php';
+
 // смайлики
 $emoji = array(
   'preload' => json_decode('"\uD83D\uDE03"'), // Улыбочка.
@@ -160,7 +162,8 @@ function processMessage($message) {
       $answ .= "\n    ";
       sendMessage($chat_id, $answ);
     } else if (strpos($text, "/mekod") === 0) {
-      $answ = "chat_id = ";
+
+      /*$answ = "chat_id = ";
       $answ .= strval($chat_id);
       $answ .= "\n";
       if (isset($message['from'])){
@@ -172,7 +175,8 @@ function processMessage($message) {
         $answ .= "username = ";
         $answ .= strval($message['chat']['username']);
         $answ .= "";
-      }
+      }*/
+      $answ = ;
       sendMessage($chat_id, $answ);
     } else if (strpos($text, "/temp") === 0) {
       $answ = "У природы нет плохой погоды (с) \xF0\x9F\x98\x81"."\nЩа посмотрим что там в небе...";
