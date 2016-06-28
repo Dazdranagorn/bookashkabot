@@ -24,6 +24,8 @@ function cGet($message) {
         error_log("Request has failed with error {$response['Code']}: {$response['Message']}\n");
         $out = 'error:';
         $out .= strval($http_code);
+        $out .= "\n";
+        $out .= $response;
       }else{
         if (isset($response['Message'])) {
           error_log("Request was successfull: {$response['Message']}\n");
@@ -50,8 +52,9 @@ function getLocation() {
 
 function getWeather() {
   $answer = '';
-  $out = cGet('http://dataservice.accuweather.com/currentconditions/v1/'.$locationKey['tomchak'].'?apikey='.$accukey.
-  '&language=ru-ru&details=true');
+  $out = cGet('http://dataservice.accuweather.com/currentconditions/v1/580864?apikey=GJkfyAOsEvEM9BrJLJejV0XZJZitcAXw&language=ru-ru&details=true');
+  //$out = cGet('http://dataservice.accuweather.com/currentconditions/v1/'.$locationKey['tomchak'].'?apikey='.$accukey.
+  //'&language=ru-ru&details=true');
     if (strpos($out, "error:") === 0){
     $answer = $out;
   }else{
