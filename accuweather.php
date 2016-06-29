@@ -43,23 +43,17 @@ function getLocation() {
   }else{
     $response = json_decode($out, true);
     //$answer = $response['Key'];
-    $obj = $response['SupplementalAdminAreas'];
-    
-    //$answer = $obj['EnglishName'];
-    //$answer .= " ";
-    //$answer .= $response['Key'];
 
-
-    $an_array = array();
-    $reflection = new ReflectionClass($obj);
-    $properties = $reflection->getProperties();
-    foreach ($properties as $property){
-      $property->setAccessible(true);
-      $an_array[$property->getName()] = $property->getValue($an_object);
-      if (!$property->isPublic())
-          $property->setAccessible(false);
+    if(isset($response['Key'])){
+      $answer .= "Key";
     }
-    $answer = $an_array['EnglishName'];
+    if(isset($response['SupplementalAdminAreas'])){
+      $answer .= "SupplementalAdminAreas";
+    }
+    
+    if(isset($response['CanonicalLocationKey'])){
+      $answer .= "CanonicalLocationKey";
+    }
 
   }
  
