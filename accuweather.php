@@ -40,12 +40,11 @@ function cGet($message) {
 
 function getLocation() {
   $answer = '';
-  $out = cGet('http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey='.$accukey.
-  '&q=59.890234%2C30.324573&language=ru-ru&details=true&toplevel=false');
+  $out = cGet('http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=GJkfyAOsEvEM9BrJLJejV0XZJZitcAXw&q=59.890234%2C30.324573&language=ru-ru&details=true&toplevel=false');
   if (strpos($out, "error:") === 0){
     $answer = $out;
-  //}else{
-    $answer .= $out['Key'];
+  }else{
+    $answer = $out['Key'];
   }
  
   return $answer;
@@ -58,8 +57,10 @@ function getWeather() {
   //'&language=ru-ru&details=true');
     if (strpos($out, "error:") === 0){
     $answer = $out;
-  //}else{
-    $answer .="\n field";
+  }else{
+    $answer = strval(strlen($out));
+    $answer .=" field ";
+
     $answer .= $out['EpochTime'];
 
 
