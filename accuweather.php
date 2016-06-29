@@ -41,8 +41,10 @@ function getLocation() {
   if (strpos($out, "error:") === 0){
     $answer = $out;
   }else{
-    $response = json_decode($out, true);
-    $answer = $response['Key'];
+    //$response = json_decode($out, true);
+    //$answer = $response['Key'];
+
+    $answer = $out;
   }
  
   return $answer;
@@ -60,7 +62,8 @@ function getWeather() {
     //$response = json_decode($out, true);
 
     $answer .= "\n";
-    $answer .= $out;
+
+    $answer .= trim($out);
     //$answer .= $response['EpochTime'];
   }
 
