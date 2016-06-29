@@ -8,6 +8,7 @@ function cGet($message) {
   $out = '';
   if($handle = curl_init()){
     curl_setopt($handle, CURLOPT_URL, $message);
+    curl_setopt($handle, CURLOPT_HEADER, false);
     curl_setopt($handle, CURLOPT_RETURNTRANSFER,true);
     curl_setopt($handle, CURLOPT_ENCODING , "gzip");
     $response = curl_exec($handle);
@@ -59,7 +60,7 @@ function getWeather() {
     $answer = $out;
   }else{
     
-    $answer = $getAddr['Key'];
+    $answer = $getAddr['EpochTime'];
 
 
   }          
