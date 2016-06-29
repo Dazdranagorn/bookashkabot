@@ -20,17 +20,14 @@ function cGet($message) {
     }else{
       $http_code = intval(curl_getinfo($handle, CURLINFO_HTTP_CODE));
       curl_close($handle);
-      $response = json_decode($response, true);
+      //$response = json_decode($response, true);
       if ($http_code != 200) {
-        error_log("Request has failed with error {$response['Code']}: {$response['Message']}\n");
+        error_log("Request has failed with error {$http_code}: {$response}\n");
         $out = 'error:';
         $out .= strval($http_code);
         $out .= "\n";
         $out .= $response;
       }else{
-        if (isset($response['Message'])) {
-          error_log("Request was successfull: {$response['Message']}\n");
-        }
         $out = $response;
       }
     }
@@ -41,10 +38,11 @@ function cGet($message) {
 function getLocation() {
   $answer = '';
   $out = cGet('http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=GJkfyAOsEvEM9BrJLJejV0XZJZitcAXw&q=59.890234%2C30.324573&language=ru-ru&details=true&toplevel=false');
-  if (strpos(implode(" ",$out), "error:") === 0){
+  if (strpos($out, "error:") === 0){
     $answer = $out;
   }else{
-    $answer = $out['Key'];
+    $response = json_decode($out, true);
+    $answer = $response['Key'];
   }
  
   return $answer;
@@ -55,21 +53,21 @@ function getWeather() {
   $out = cGet('http://dataservice.accuweather.com/currentconditions/v1/580864?apikey=GJkfyAOsEvEM9BrJLJejV0XZJZitcAXw&language=ru-ru&details=true');
   //$out = cGet('http://dataservice.accuweather.com/currentconditions/v1/'.$locationKey['tomchak'].'?apikey='.$accukey.
   //'&language=ru-ru&details=true');
-    if (strpos(implode(" ",$out), "error:") === 0){
+    if (strpos($out, "error:") === 0){
     $answer = $out;
   }else{
     $answer = strval(strlen($out));
+    $response = json_decode($out, true);
+
     $answer .=" field ";
-
-    $answer .= $out['EpochTime'];
-
-
-  }          
+    $answer .= $response['EpochTime'];
+  }
+            
   return $answer;
 }
+
+
 // поиск 
-
-
 /*
 $answer .= "\n";
 $answer .= "\n";
