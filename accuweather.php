@@ -57,12 +57,12 @@ function getWeather() {
     $answer = $out;
   }else{
     $answer = strval(strlen($out));
-    $response = json_decode($out, true);
+    //$response = json_decode($out, true);
 
-    $answer .=" field ";
-    $answer .= $response['EpochTime'];
+    $answer .="\n";
+    //$answer .= $response['EpochTime'];
   }
-            
+
   return $answer;
 }
 
