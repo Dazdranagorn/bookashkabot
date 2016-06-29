@@ -45,9 +45,22 @@ function getLocation() {
     //$answer = $response['Key'];
     $obj = (array)$response['SupplementalAdminAreas'];
     
-    $answer = $obj['EnglishName'];
-    $answer .= " ";
-    $answer .= $response['Key']; 
+    //$answer = $obj['EnglishName'];
+    //$answer .= " ";
+    //$answer .= $response['Key'];
+
+
+    $an_array = array();
+    $reflection = new ReflectionClass($response['SupplementalAdminAreas']);
+    $properties = $reflection->getProperties();
+    foreach ($properties as $property){
+      $property->setAccessible(true);
+      $an_array[$property->getName()] = $property->getValue($an_object);
+      if (!$property->isPublic())
+          $property->setAccessible(false);
+    }
+    $answer = $an_array['EnglishName'];
+
   }
  
   return $answer;
