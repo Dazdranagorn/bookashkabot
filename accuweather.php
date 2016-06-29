@@ -41,7 +41,7 @@ function cGet($message) {
 function getLocation() {
   $answer = '';
   $out = cGet('http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=GJkfyAOsEvEM9BrJLJejV0XZJZitcAXw&q=59.890234%2C30.324573&language=ru-ru&details=true&toplevel=false');
-  if (strpos($out, "error:") === 0){
+  if (strpos(implode(" ",$out), "error:") === 0){
     $answer = $out;
   }else{
     $answer = $out['Key'];
@@ -55,7 +55,7 @@ function getWeather() {
   $out = cGet('http://dataservice.accuweather.com/currentconditions/v1/580864?apikey=GJkfyAOsEvEM9BrJLJejV0XZJZitcAXw&language=ru-ru&details=true');
   //$out = cGet('http://dataservice.accuweather.com/currentconditions/v1/'.$locationKey['tomchak'].'?apikey='.$accukey.
   //'&language=ru-ru&details=true');
-    if (strpos($out, "error:") === 0){
+    if (strpos(implode(" ",$out), "error:") === 0){
     $answer = $out;
   }else{
     $answer = strval(strlen($out));
