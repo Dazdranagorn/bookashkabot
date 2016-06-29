@@ -59,7 +59,8 @@ function getWeather() {
     $answer = strval(strlen($out));
     //$response = json_decode($out, true);
 
-    $answer .="\n";
+    $answer .= "\n";
+    $answer .= $out;
     //$answer .= $response['EpochTime'];
   }
 
