@@ -42,7 +42,8 @@ function getLocation() {
     $answer = $out;
   }else{
     $response = json_decode($out, true);
-    $answer = $response['Key'];
+    //$answer = $response['Key'];
+    $answer = $response['SupplementalAdminAreas']['EnglishName'];
   }
  
   return $answer;
@@ -59,9 +60,10 @@ function getWeather() {
     //$answer = strval(strlen($out));
     //$response = json_decode($out, true);
 
-    $answer .= trim($out,"][");
+    $response = json_decode(trim($out,"]["),true);
+    $answer = $out;
     $answer .= "\n";
-    $answer .= $response['EpochTime'];
+    $answer .= $response['LocalObservationDateTime'];
   }
 
   return $answer;
