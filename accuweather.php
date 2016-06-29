@@ -44,8 +44,8 @@ function getLocation() {
   '&q=59.890234%2C30.324573&language=ru-ru&details=true&toplevel=false');
   if (strpos($out, "error:") === 0){
     $answer = $out;
-  }else{
-    $answer = $out['Key'];
+  //}else{
+    $answer .= $out['Key'];
   }
  
   return $answer;
@@ -58,9 +58,9 @@ function getWeather() {
   //'&language=ru-ru&details=true');
     if (strpos($out, "error:") === 0){
     $answer = $out;
-  }else{
-    
-    $answer = $out['EpochTime'];
+  //}else{
+    $answer .="\n field";
+    $answer .= $out['EpochTime'];
 
 
   }          
