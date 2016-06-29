@@ -60,7 +60,7 @@ function getWeather() {
     $answer = $out;
   }else{
     
-    $answer = $getAddr['EpochTime'];
+    $answer = $out['EpochTime'];
 
 
   }          
