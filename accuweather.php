@@ -45,14 +45,16 @@ function getLocation() {
     //$answer = $response['Key'];
 
     if(isset($response['Key'])){
-      $answer .= "Key";
-    }/*
-    if(isset($response['SupplementalAdminAreas'])){
-      $answer .= "SupplementalAdminAreas";
+      $answer .= "Key ";
     }
-    */
-    if(isset($response['CanonicalLocationKey'])){
+    if(isset($response['SupplementalAdminAreas'])){
+      $answer .= "SupplementalAdminAreas ";
+    }
+    if(isset($response['Details'])){
+      $answer .= "Details.";
+      if(isset($response['CanonicalLocationKey'])){
       $answer .= "CanonicalLocationKey";
+      }
     }
 
   }
