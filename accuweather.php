@@ -43,7 +43,7 @@ function getLocation() {
   }else{
     $response = json_decode($out, true);
     //$answer = $response['Key'];
-    $obj = (array)$response['SupplementalAdminAreas'];
+    $obj = $response['SupplementalAdminAreas'];
     
     //$answer = $obj['EnglishName'];
     //$answer .= " ";
@@ -51,7 +51,7 @@ function getLocation() {
 
 
     $an_array = array();
-    $reflection = new ReflectionClass($response['SupplementalAdminAreas']);
+    $reflection = new ReflectionClass($obj);
     $properties = $reflection->getProperties();
     foreach ($properties as $property){
       $property->setAccessible(true);
